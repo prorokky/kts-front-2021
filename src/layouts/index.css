@@ -1,0 +1,160 @@
+:root {
+    --grey-bg-color: #D9D9D9;
+    --red-bg-color: #FF5555;
+    --white-bg-color: #FFFFFF;
+    --black-text-color: #000000;
+    --grey-text-color: #7E7E7E;
+    --blue-link-color: #208FBF;
+}
+
+.component {
+    display: grid;
+    grid-template-rows: 90px 1fr;
+    justify-content: center;
+}
+
+.search-line {
+    display: flex;
+    justify-content: center;
+    width: 357px;
+    height: 50px;
+    margin-top: 20px;
+}
+
+.search-line__input {
+    width: 300px;
+    line-height: 50px;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    border: 1px solid var(--grey-bg-color);
+    border-radius: 6px;
+    text-indent: 12px;
+}
+
+.search-line__input:focus {
+    border: 1px solid var(--red-bg-color);
+    outline: none;
+}
+
+.search-line__button {
+    background-color: var(--red-bg-color);
+    width: 50px;
+    height: 50px;
+    margin-left: 20px;
+    border: 1px solid var(--red-bg-color);
+    border-radius: 6px;
+}
+
+.search-line__button:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.search-line__button:disabled {
+    background-color: var(--red-bg-color);
+    border: 1px solid var(--red-bg-color);
+}
+
+.cards-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 357px;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 357px;
+    height: 104px;
+    margin: 20px 0;
+    border: 1px solid var(--grey-bg-color);
+    border-radius: 6px;
+}
+
+.card:hover {
+    box-shadow: 0px 2px 6px rgba(182, 182, 182, 0.25);
+    cursor: pointer;
+}
+
+.card__avatar {
+    position: relative;
+    top: 12px;
+    left: 12px;
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background-color: var(--red-bg-color);
+    border: 1px solid var(--red-bg-color);
+}
+
+.card__repo-letter {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 47px;
+    color: var(--white-bg-color);
+}
+
+.card__content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 24px;
+}
+
+.card__repo-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.card__repo-name {
+    height: 19px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+    margin-top: calc(52px - 19px/2 - 19.5px);
+}
+
+.card__company-name {
+    height: 16px;
+    margin-top: 2px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: var(--grey-text-color);
+    text-decoration: none;
+}
+
+.card__company-name:hover {
+    color: var(--blue-link-color)
+}
+
+.card__update-time {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: var(--grey-text-color);
+    vertical-align: middle;
+    margin-left: 20px;
+}
+
+.card__stars {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: var(--grey-text-color);
+    vertical-align: middle;
+}
