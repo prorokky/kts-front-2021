@@ -17,8 +17,7 @@ export default class ApiStore implements IApiStore {
 
         if (params.method === HTTPMethod.GET) {
             url = `${url}?${qs.stringify(params.data)}`
-        }
-        if (params.method === HTTPMethod.POST) {
+        } else {
             req.body = JSON.stringify(params.data)
             req.headers = {...params.headers}
             req.headers['Content-Type'] = 'text/plain;charset=UTF-8'
@@ -38,7 +37,7 @@ export default class ApiStore implements IApiStore {
             return {
                 success: false,
                 data: await response.json(),
-                status: StatusHTTP.InternalServerError
+                status: response.status
             }
 
         } catch (e) {

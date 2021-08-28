@@ -7,6 +7,10 @@
     --blue-link-color: #208FBF;
 }
 
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
 .component {
     display: grid;
     grid-template-rows: 90px 1fr;
@@ -15,7 +19,7 @@
 
 .search-line {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     width: 357px;
     height: 50px;
     margin-top: 20px;
@@ -25,7 +29,6 @@
     width: 300px;
     line-height: 50px;
     font-size: 14px;
-    font-family: 'Roboto', sans-serif;
     border: 1px solid var(--grey-bg-color);
     border-radius: 6px;
     text-indent: 12px;
@@ -40,7 +43,6 @@
     background-color: var(--red-bg-color);
     width: 50px;
     height: 50px;
-    margin-left: 20px;
     border: 1px solid var(--red-bg-color);
     border-radius: 6px;
 }
@@ -66,11 +68,12 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    width: 357px;
     height: 104px;
     margin: 20px 0;
     border: 1px solid var(--grey-bg-color);
     border-radius: 6px;
+    align-items: center;
+    padding-left: 12px;
 }
 
 .card:hover {
@@ -80,20 +83,23 @@
 
 .card__avatar {
     position: relative;
-    top: 12px;
-    left: 12px;
     width: 80px;
     height: 80px;
     border-radius: 40px;
     background-color: var(--red-bg-color);
-    border: 1px solid var(--red-bg-color);
+}
+
+.card__repo-img {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
 }
 
 .card__repo-letter {
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 40px;
@@ -114,18 +120,16 @@
 
 .card__repo-name {
     height: 19px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
     line-height: 19px;
-    margin-top: calc(52px - 19px/2 - 19.5px);
+    text-overflow: ellipsis
 }
 
 .card__company-name {
     height: 16px;
     margin-top: 2px;
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -139,22 +143,22 @@
 }
 
 .card__update-time {
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
     line-height: 16px;
     color: var(--grey-text-color);
-    vertical-align: middle;
-    margin-left: 20px;
+    margin: 0 20px;
 }
 
 .card__stars {
-    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
     line-height: 16px;
     color: var(--grey-text-color);
+}
+
+.card__stars > svg {
     vertical-align: middle;
 }
