@@ -1,6 +1,6 @@
 import ApiStore from '../../shared/store/ApiStore';
-import {GetOrganizationReposListParams, IGitHubStore, RepoItem} from "./types";
 import {ApiResponse, HTTPMethod} from "../../shared/store/ApiStore/types";
+import {GetOrganizationReposListParams, IGitHubStore, RepoItem} from "./types";
 
 const BASE_URL = 'https://api.github.com'
 

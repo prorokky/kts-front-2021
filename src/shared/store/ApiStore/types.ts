@@ -38,6 +38,11 @@ export type ApiResponse<SuccessT, ErrorT> =
     success: false;
     data: ErrorT;
     status: StatusHTTP;
+}
+    | {
+    success: false;
+    data: null;
+    status: StatusHTTP;
 };
 
 // Интерфейс для класса, с помощью которого можно делать запросы к API

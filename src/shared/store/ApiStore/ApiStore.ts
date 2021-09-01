@@ -1,4 +1,5 @@
 import qs from "qs";
+
 import {ApiResponse, HTTPMethod, IApiStore, RequestParams, StatusHTTP} from "./types";
 
 export default class ApiStore implements IApiStore {
@@ -43,7 +44,7 @@ export default class ApiStore implements IApiStore {
         } catch (e) {
             return {
                 success: false,
-                data: e,
+                data: null,
                 status: StatusHTTP.UNEXPECTED_ERROR
             }
         }
