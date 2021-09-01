@@ -1,0 +1,9 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.component {
+    display: grid;
+    grid-template-rows: 90px 1fr;
+    justify-content: center;
+}

@@ -3,9 +3,8 @@
         "baseUrl": ".",
         "paths": {
         "@components/*": ["src/components/*"],
-        "@config/*": ["src/config/*"],
         "@styles/*": ["src/styles/*"],
-        "@utils/*": ["src/utils/*"]
+        "@repos/*": ["src/ReposSearchPage/*"]
         }
     }
 }
