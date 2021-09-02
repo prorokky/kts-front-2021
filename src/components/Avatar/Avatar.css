@@ -1,0 +1,30 @@
+:root {
+    --red-bg-color: #FF5555;
+    --white-bg-color: #FFFFFF;
+}
+
+.card__avatar {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background-color: var(--red-bg-color);
+}
+
+.card__repo-img {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.card__repo-letter {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 47px;
+    color: var(--white-bg-color);
+}

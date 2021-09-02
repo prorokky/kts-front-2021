@@ -1,8 +1,7 @@
 import React from 'react';
 
 import './App.css';
-import '../root/root'
-import ReposSearchPage from '@repos/ReposSearchPage';
+import ReposSearchPage from './pages/ReposSearchPage/ReposSearchPage';
 
 function App() {
   return (
