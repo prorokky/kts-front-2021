@@ -22,6 +22,7 @@ export type RepoItem = {
     url: string
     name: string
     stargazers_count: number
+    updated_at: string
     owner: GitHubRepoOwner
 }
 
