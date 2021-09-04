@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "antd/dist/antd.css";
 
 import { getOrganizationRepoBranchesFetch } from "@root/root";
 import { Drawer } from "antd";
@@ -35,11 +36,12 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   return (
     <>
       <Drawer
-        title={`Список веток репозитория ${selectedRepo?.name}`}
+        title={`Список веток репозитория ${selectedRepo ? selectedRepo.name : ''}`}
         placement="right"
         width={500}
         onClose={onClose}
         visible={visible}
+        getContainer={false}
       >
         {branches.map((el) => {
           return (
