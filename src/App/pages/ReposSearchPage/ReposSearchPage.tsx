@@ -3,17 +3,19 @@ import React, { useState } from "react";
 import Avatar from "@components/Avatar";
 import Button from "@components/Button";
 import Input from "@components/Input";
+import ReposBranchesDrawer from "@components/ReposBranchesDrawer";
 import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
 import "./ReposSearchPage.css";
-import { getOrganizationReposListFetch, getOrganizationRepoBranchesFetch } from "@root/root";
-import { RepoBranches, RepoItem } from "src/store/GitHubStore/types";
+import { getOrganizationReposListFetch } from "@root/root";
+import { RepoItem } from "src/store/GitHubStore/types";
 
 const ReposSearchPage = () => {
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [repos, setRepos] = useState<RepoItem[]>([]);
-  const [selectedRepo, setSelectedRepo] = useState<RepoBranches[]>([])
+  const [selectedRepo, setSelectedRepo] = useState<RepoItem>();
+  const [visible, setVisible] = useState(false);
 
   const handlerInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -33,12 +35,13 @@ const ReposSearchPage = () => {
     setIsLoading(false);
   };
 
-  const handlerRepo = (event: React.MouseEvent, repo: string, owner: string) => {
-      getOrganizationRepoBranchesFetch(repo, owner).then((data) => {
-          if (data) {
-              setSelectedRepo(data)
-          }
-      }) 
+  const handlerRepo = (event: React.MouseEvent, item: RepoItem) => {
+    setSelectedRepo(item);
+    setVisible(true)
+  };
+
+  const handlerDrawer = () => {
+      setVisible(false)
   };
 
   return (
@@ -65,6 +68,11 @@ const ReposSearchPage = () => {
           </div>
         );
       })}
+      <ReposBranchesDrawer
+        selectedRepo={selectedRepo}
+        onClose={handlerDrawer}
+        visible={visible}
+      />
     </div>
   );
 };

@@ -7,12 +7,12 @@ import "./RepoTile.css";
 
 type RepoTileProps = {
   item: RepoItem;
-  onClick: (event: React.MouseEvent, repo: string, owner: string) => void;
+  onClick: (event: React.MouseEvent, item: RepoItem) => void;
 };
 
 const RepoTile: React.FC<RepoTileProps> = ({ item, onClick }) => {
   return (
-    <div className="card__content" onClick={(event) => onClick(event, item.name, item.owner.login)}>
+    <div className="card__content" onClick={(event) => onClick(event, item)}>
       <div className="card__repo-info">
         <span className="card__repo-name">{item.name ? item.name : ""}</span>
         <span className="card__company-name">

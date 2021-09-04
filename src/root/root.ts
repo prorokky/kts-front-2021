@@ -19,7 +19,7 @@ export const getOrganizationReposListFetch = (organizationName: OrganizationName
 
 export const getOrganizationRepoBranchesFetch = (owner: Owner, repo: Repo) => 
   gitHubStore.getOrganizationRepoBranches({owner, repo})
-    .then((result: ApiResponse<RepoBranches[], any>) => {
+    .then((result: ApiResponse<RepoBranches, any>) => {
       if (result.success) {
         return result.data
       }
