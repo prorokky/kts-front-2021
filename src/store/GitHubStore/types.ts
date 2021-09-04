@@ -7,6 +7,11 @@
  */
 import {ApiResponse} from "../../shared/store/ApiStore/types";
 
+export type GetOrganizationRepoBranchesParams = {
+    owner: string
+    repo: string
+}
+
 export type GetOrganizationReposListParams = {
     organizationName: string
 }
@@ -26,6 +31,11 @@ export type RepoItem = {
     owner: GitHubRepoOwner
 }
 
+export type RepoBranches = {
+    name: string
+}
+
 export interface IGitHubStore {
     getOrganizationReposList(params: GetOrganizationReposListParams): Promise<ApiResponse<RepoItem[], any>>;
+    getOrganizationRepoBranches(params: GetOrganizationRepoBranchesParams): Promise<ApiResponse<RepoBranches[], any>>;
 }

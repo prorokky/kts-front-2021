@@ -6,13 +6,14 @@ import Input from "@components/Input";
 import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
 import "./ReposSearchPage.css";
-import { getOrganizationReposListFetch } from "@root/root";
-import { RepoItem } from "src/store/GitHubStore/types";
+import { getOrganizationReposListFetch, getOrganizationRepoBranchesFetch } from "@root/root";
+import { RepoBranches, RepoItem } from "src/store/GitHubStore/types";
 
 const ReposSearchPage = () => {
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [repos, setRepos] = useState<RepoItem[]>([]);
+  const [selectedRepo, setSelectedRepo] = useState<RepoBranches[]>([])
 
   const handlerInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -30,6 +31,14 @@ const ReposSearchPage = () => {
     });
     setValue("");
     setIsLoading(false);
+  };
+
+  const handlerRepo = (event: React.MouseEvent, repo: string, owner: string) => {
+      getOrganizationRepoBranchesFetch(repo, owner).then((data) => {
+          if (data) {
+              setSelectedRepo(data)
+          }
+      }) 
   };
 
   return (
@@ -50,7 +59,7 @@ const ReposSearchPage = () => {
                   alt="repo_img"
                   letter={el.name.substring(0, 1).toUpperCase()}
                 />
-                <RepoTile item={el} />
+                <RepoTile item={el} onClick={handlerRepo} />
               </div>
             </React.Fragment>
           </div>
