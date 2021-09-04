@@ -16,7 +16,7 @@ export default class GitHubStore implements IGitHubStore {
         })
     }
 
-    async getOrganizationRepoBranches(params: GetOrganizationRepoBranchesParams): Promise<ApiResponse<RepoBranches, any>> {
+    async getOrganizationRepoBranches(params: GetOrganizationRepoBranchesParams): Promise<ApiResponse<RepoBranches[], any>> {
         return await this.apiStore.request({
             method: HTTPMethod.GET,
             data: {},
