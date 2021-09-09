@@ -8,6 +8,7 @@ import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
 import "./ReposSearchPage.css";
 import { getOrganizationReposListFetch } from "@root/root";
+import { Route, Link } from "react-router-dom";
 import { RepoItem } from "src/store/GitHubStore/types";
 
 const ReposSearchPage = () => {
@@ -44,35 +45,46 @@ const ReposSearchPage = () => {
       setVisible(false)
   };
 
+  const ReposBranchesDrawerCall = () => {
+    return <ReposBranchesDrawer
+              selectedRepo={selectedRepo}
+              onClose={handlerDrawer}
+              visible={visible}
+            />
+  }
+
   return (
     <div>
       <form className="search-line">
         <Input value={value} onChange={handlerInput} />
-        <Button disabled={isLoading} onClick={handlerButton}>
-          <SearchIcon />
-        </Button>
+          <Button disabled={isLoading} onClick={handlerButton}>
+            <SearchIcon />
+          </Button>
       </form>
       {repos.map((el) => {
         return (
-          <div className="card-block">
-            <React.Fragment key={el.id}>
+        <React.Fragment key={el.id}>
+            <div className="card-block">
               <div className="card">
                 <Avatar
                   src={el.owner.avatar_url}
                   alt="repo_img"
                   letter={el.name.substring(0, 1).toUpperCase()}
                 />
-                <RepoTile item={el} onClick={handlerRepo} />
+                <Link to={`/repos/${el.id}`}> 
+                  <RepoTile item={el} onClick={handlerRepo} />
+                </Link>
               </div>
-            </React.Fragment>
-          </div>
+            </div>
+          </React.Fragment>
         );
       })}
-      <ReposBranchesDrawer
+      <Route path='/repos/:id' component={ReposBranchesDrawerCall} />
+      {/* <ReposBranchesDrawer
         selectedRepo={selectedRepo}
         onClose={handlerDrawer}
         visible={visible}
-      />
+      /> */}
     </div>
   );
 };
