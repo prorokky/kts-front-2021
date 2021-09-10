@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Avatar from "@components/Avatar";
 import Button from "@components/Button";
@@ -7,6 +7,7 @@ import ReposBranchesDrawer from "@components/ReposBranchesDrawer";
 import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
 import "./ReposSearchPage.css";
+import { ReposSearchPageContext } from "@contexts/ReposSearchPageContext";
 import { getOrganizationReposListFetch } from "@root/root";
 import { Route, Link } from "react-router-dom";
 import { RepoItem } from "src/store/GitHubStore/types";
@@ -17,6 +18,8 @@ const ReposSearchPage = () => {
   const [repos, setRepos] = useState<RepoItem[]>([]);
   const [selectedRepo, setSelectedRepo] = useState<RepoItem>();
   const [visible, setVisible] = useState(false);
+
+  const load = () => {}
 
   const handlerInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -33,59 +36,67 @@ const ReposSearchPage = () => {
       }
     });
     setValue("");
-    setIsLoading(false);
   };
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [repos]);
 
   const handlerRepo = (event: React.MouseEvent, item: RepoItem) => {
     setSelectedRepo(item);
-    setVisible(true)
+    setVisible(true);
   };
 
   const handlerDrawer = () => {
-      setVisible(false)
+    setVisible(false);
   };
 
   const ReposBranchesDrawerCall = () => {
-    return <ReposBranchesDrawer
-              selectedRepo={selectedRepo}
-              onClose={handlerDrawer}
-              visible={visible}
-            />
-  }
-
-  return (
-    <div>
-      <form className="search-line">
-        <Input value={value} onChange={handlerInput} />
-          <Button disabled={isLoading} onClick={handlerButton}>
-            <SearchIcon />
-          </Button>
-      </form>
-      {repos.map((el) => {
-        return (
-        <React.Fragment key={el.id}>
-            <div className="card-block">
-              <div className="card">
-                <Avatar
-                  src={el.owner.avatar_url}
-                  alt="repo_img"
-                  letter={el.name.substring(0, 1).toUpperCase()}
-                />
-                <Link to={`/repos/${el.id}`}> 
-                  <RepoTile item={el} onClick={handlerRepo} />
-                </Link>
-              </div>
-            </div>
-          </React.Fragment>
-        );
-      })}
-      <Route path='/repos/:id' component={ReposBranchesDrawerCall} />
-      {/* <ReposBranchesDrawer
+    return (
+      <ReposBranchesDrawer
         selectedRepo={selectedRepo}
         onClose={handlerDrawer}
         visible={visible}
-      /> */}
-    </div>
+      />
+    );
+  };
+
+  return (
+    <ReposSearchPageContext.Provider
+      value={{
+        repos,
+        isLoading,
+        load
+      }}
+    >
+      <div>
+        <form className="search-line">
+          <Input value={value} onChange={handlerInput} />
+          <Button onClick={handlerButton}>
+            <SearchIcon />
+          </Button>
+        </form>
+        {repos.map((el) => {
+          return (
+            <React.Fragment key={el.id}>
+              <div className="card-block">
+                <div className="card">
+                  <Avatar
+                    src={el.owner.avatar_url}
+                    alt="repo_img"
+                    letter={el.name.substring(0, 1).toUpperCase()}
+                  />
+                  <Link to={`/repos/${el.id}`}>
+                    <RepoTile item={el} onClick={handlerRepo} />
+                  </Link>
+                </div>
+              </div>
+            </React.Fragment>
+          );
+        })}
+        <Route path="/repos/:id" component={ReposBranchesDrawerCall} />
+      </div>
+    </ReposSearchPageContext.Provider>
   );
 };
 
