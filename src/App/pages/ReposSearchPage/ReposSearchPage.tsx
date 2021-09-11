@@ -86,7 +86,7 @@ const ReposSearchPage = () => {
                     alt="repo_img"
                     letter={el.name.substring(0, 1).toUpperCase()}
                   />
-                  <Link to={`/repos/${el.id}`}>
+                  <Link to={`/repos/${el.name}`}>
                     <RepoTile item={el} onClick={handlerRepo} />
                   </Link>
                 </div>
@@ -94,7 +94,7 @@ const ReposSearchPage = () => {
             </React.Fragment>
           );
         })}
-        <Route path="/repos/:id" component={ReposBranchesDrawerCall} />
+        <Route path="/repos/:name" component={ReposBranchesDrawerCall} />
       </div>
     </ReposSearchPageContext.Provider>
   );

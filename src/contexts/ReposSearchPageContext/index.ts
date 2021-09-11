@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 import { RepoItem } from "src/store/GitHubStore/types";
 
@@ -12,4 +12,6 @@ export const ReposSearchPageContext = createContext<ReposContext>({
     repos: [],
     isLoading: false,
     load: () => {}
-  });
+});
+
+export const useReposContext = () => useContext(ReposSearchPageContext)

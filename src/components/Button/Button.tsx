@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
-import { ReposSearchPageContext } from '@contexts/ReposSearchPageContext'
+import { useReposContext } from '@contexts/ReposSearchPageContext'
 
 import './Button.css'
 
@@ -10,7 +10,7 @@ type ButtonProps = {
 }
 
 const Button: React.FC<ButtonProps> = ({ children, onClick }) => {
-    const reposContext = useContext(ReposSearchPageContext)
+    const reposContext = useReposContext()
 
     return ( 
         <button 
