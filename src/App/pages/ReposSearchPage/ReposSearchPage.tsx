@@ -11,14 +11,14 @@ import { getOrganizationReposListFetch } from "@root/root";
 import { RepoItem } from "src/store/GitHubStore/types";
 
 const ReposSearchPage = () => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [repos, setRepos] = useState<RepoItem[]>([]);
   const [selectedRepo, setSelectedRepo] = useState<RepoItem | undefined>();
   const [visible, setVisible] = useState(false);
 
-  const handlerInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+  const handleInput = (value: React.SetStateAction<string>) => {
+    setValue(value)
   }
 
   const handlerButton = async (event: React.MouseEvent) => {
@@ -41,13 +41,13 @@ const ReposSearchPage = () => {
   };
 
   const handlerDrawer = () => {
-      setVisible(false)
+      setSelectedRepo(undefined)
   };
 
   return (
     <div>
       <form className="search-line">
-        <Input value={value} onChange={handlerInput}/>
+        <Input value={value} onChange={handleInput}/>
         <Button disabled={isLoading} onClick={handlerButton}>
           <SearchIcon />
         </Button>

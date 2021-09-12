@@ -41,7 +41,7 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
         placement="right"
         width={VALUE_WIDTH}
         onClose={onClose}
-        visible={visible}
+        visible={selectedRepo ? true : false}
         getContainer={false}
       >
         {branches.map((branch) => {
