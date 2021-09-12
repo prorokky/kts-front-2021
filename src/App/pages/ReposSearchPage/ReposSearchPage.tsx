@@ -6,11 +6,12 @@ import Input from "@components/Input";
 import ReposBranchesDrawer from "@components/ReposBranchesDrawer";
 import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
-import "./ReposSearchPage.css";
 import { ReposSearchPageContext } from "@contexts/ReposSearchPageContext";
 import { getOrganizationReposListFetch } from "@root/root";
 import { Route, Link } from "react-router-dom";
 import { RepoItem } from "src/store/GitHubStore/types";
+
+import ReposSearchPageStyles from "./ReposSearchPage.module.scss";
 
 const ReposSearchPage = () => {
   const [value, setValue] = useState<string>("");
@@ -67,7 +68,7 @@ const ReposSearchPage = () => {
       }}
     >
       <div>
-        <form className="search-line">
+        <form className={ReposSearchPageStyles.search_line}>
           <Input value={value} onChange={handleInput} />
           <Button onClick={handlerButton}>
             <SearchIcon />
@@ -75,8 +76,8 @@ const ReposSearchPage = () => {
         </form>
         {repos.map((repo) => (
           <React.Fragment key={repo.id}>
-            <div className="card-block">   
-              <div className="card">
+            <div className={ReposSearchPageStyles.card_block}>   
+              <div className={ReposSearchPageStyles.card}>
                 <Avatar
                   src={repo.owner.avatar_url}
                   alt="repo_img"

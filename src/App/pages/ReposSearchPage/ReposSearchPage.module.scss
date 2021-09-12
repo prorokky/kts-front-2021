@@ -1,9 +1,11 @@
+@import '@styles/variables.scss';
+
 a {
     color: #000 !important;
     text-decoration: none;
 }
 
-.search-line {
+.search_line {
     display: flex;
     justify-content: space-between;
     width: 357px;
@@ -11,7 +13,7 @@ a {
     margin-top: 20px;
 }
 
-.cards-block {
+.cards_block {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,13 +26,13 @@ a {
     justify-content: flex-start;
     height: 104px;
     margin: 20px 0;
-    border: 1px solid var(--grey-bg-color);
+    border: 1px solid $grey-bg-color;
     border-radius: 6px;
     align-items: center;
     padding-left: 12px;
-}
 
-.card:hover {
-    box-shadow: 0px 2px 6px rgba(182, 182, 182, 0.25);
-    cursor: pointer;
+    &:hover {
+        box-shadow: 0px 2px 6px rgba(182, 182, 182, 0.25);
+        cursor: pointer;
+    }
 }

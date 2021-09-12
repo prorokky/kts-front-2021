@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './Input.css'
+import InputStyles from './Input.module.scss'
 
 type InputProps = {
     value: string,
@@ -15,7 +15,7 @@ const Input: React.FC<InputProps> = ({ value, placeholder = 'Введите на
     
     return (
         <input 
-            className='search-line__input'
+            className={InputStyles.search_line__input}
             value={value}
             placeholder={placeholder}
             onChange={handleChange}>

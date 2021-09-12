@@ -2,12 +2,12 @@ import React from "react";
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-import "./App.css";
+import AppStyles from "./App.module.scss";
 import ReposSearchPage from "./pages/ReposSearchPage/ReposSearchPage";
 
 function App() {
   return (
-    <div className="component">
+    <div className={AppStyles.component}>
      <BrowserRouter>
         <Switch>
           <Route path="/repos" component={ReposSearchPage} />

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useReposContext } from '@contexts/ReposSearchPageContext'
 
-import './Button.css'
+import Buttonstyles from './Button.module.scss'
 
 type ButtonProps = {
     children: React.ReactNode,
@@ -14,7 +14,7 @@ const Button: React.FC<ButtonProps> = ({ children, onClick }) => {
 
     return ( 
         <button 
-            className="search-line__button"
+            className={Buttonstyles.search_line__button}
             disabled={reposContext.isLoading}
             onClick={onClick}>
             {children}

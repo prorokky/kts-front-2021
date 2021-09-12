@@ -1,24 +1,21 @@
-:root {
-    --red-bg-color: #FF5555;
-    --white-bg-color: #FFFFFF;
-}
+@import '@styles/variables.scss';
 
 .card__avatar {
     position: relative;
     width: 80px;
     height: 80px;
     border-radius: 40px;
-    background-color: var(--red-bg-color);
+    background-color: $red-bg-color;
 }
 
-.card__repo-img {
+.card__repo_img {
     position: absolute;
     width: 80px;
     height: 80px;
     border-radius: 50%;
 }
 
-.card__repo-letter {
+.card__repo_letter {
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -26,5 +23,5 @@
     font-weight: bold;
     font-size: 40px;
     line-height: 47px;
-    color: var(--white-bg-color);
+    color: $white-bg-color;
 }

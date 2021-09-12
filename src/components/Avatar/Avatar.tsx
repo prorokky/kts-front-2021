@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Avatar.css'
+import AvatarStyles from './Avatar.module.scss'
 
 type AvatarProps = {
     src?: string,
@@ -10,12 +10,12 @@ type AvatarProps = {
 
 const Avatar: React.FC<AvatarProps> = ({ src, alt, letter }) => {
     return (
-        <div className='card__avatar'>
-            {src && <img className='card__repo-img'
+        <div className={AvatarStyles.card__avatar}>
+            {src && <img className={AvatarStyles.card__repo_img}
                         src={src}
                         alt={alt}>
                     </img>}
-            {!src && <p className='card__repo-letter'>
+            {!src && <p className={AvatarStyles.card__repo_letter}>
                         {letter}
                     </p>}
         </div>
