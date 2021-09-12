@@ -14,7 +14,7 @@ const RepoTile: React.FC<RepoTileProps> = ({ item, onClick }) => {
   return (
     <div className="card__content" onClick={(event) => onClick(event, item)}>
       <div className="card__repo-info">
-        <span className="card__repo-name">{item.name ? item.name : ""}</span>
+        <span className="card__repo-name">{item.name ?? ""}</span>
         <span className="card__company-name">
           {item.owner.login}
         </span>

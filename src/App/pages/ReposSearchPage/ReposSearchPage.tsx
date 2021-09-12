@@ -14,23 +14,23 @@ const ReposSearchPage = () => {
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [repos, setRepos] = useState<RepoItem[]>([]);
-  const [selectedRepo, setSelectedRepo] = useState<RepoItem>();
+  const [selectedRepo, setSelectedRepo] = useState<RepoItem | undefined>();
   const [visible, setVisible] = useState(false);
 
   const handlerInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-  };
+  }
 
-  const handlerButton = (event: React.MouseEvent) => {
+  const handlerButton = async (event: React.MouseEvent) => {
     event.preventDefault();
     setIsLoading(true);
-    getOrganizationReposListFetch(value).then((value) => {
-      if (value) {
-        setRepos(value);
-      } else {
-        alert("Что-то пошло не так!");
-      }
-    });
+    let promise = getOrganizationReposListFetch(value)
+    let result = await promise
+    if (result) {
+      setRepos(result);
+    } else {
+      alert("Что-то пошло не так!");
+    }
     setValue("");
     setIsLoading(false);
   };
@@ -47,27 +47,26 @@ const ReposSearchPage = () => {
   return (
     <div>
       <form className="search-line">
-        <Input value={value} onChange={handlerInput} />
+        <Input value={value} onChange={handlerInput}/>
         <Button disabled={isLoading} onClick={handlerButton}>
           <SearchIcon />
         </Button>
       </form>
-      {repos.map((el) => {
-        return (
-          <div className="card-block">
-            <React.Fragment key={el.id}>
+      {repos.map((repo) => (
+          <React.Fragment key={repo.id}>
+            <div className="card-block">   
               <div className="card">
                 <Avatar
-                  src={el.owner.avatar_url}
+                  src={repo.owner.avatar_url}
                   alt="repo_img"
-                  letter={el.name.substring(0, 1).toUpperCase()}
+                  letter={repo.name.substring(0, 1).toUpperCase()}
                 />
-                <RepoTile item={el} onClick={handlerRepo} />
-              </div>
-            </React.Fragment>
-          </div>
-        );
-      })}
+                <RepoTile item={repo} onClick={handlerRepo} />
+              </div> 
+            </div>
+          </React.Fragment>
+        )
+      )}
       <ReposBranchesDrawer
         selectedRepo={selectedRepo}
         onClose={handlerDrawer}

@@ -1,6 +1,6 @@
 import {ApiResponse} from '../shared/store/ApiStore/types';
 import GitHubStore from '../store/GitHubStore/GitHubStore';
-import {RepoBranches, RepoItem} from "../store/GitHubStore/types";
+import {GitHubRepoOwner, RepoBranches, RepoItem} from "../store/GitHubStore/types";
 
 const gitHubStore = new GitHubStore();
 
@@ -17,7 +17,7 @@ export const getOrganizationReposListFetch = (organizationName: OrganizationName
   })
 
 
-export const getOrganizationRepoBranchesFetch = (owner: Owner, repo: Repo) => 
+export const getOrganizationRepoBranchesFetch = (owner: GitHubRepoOwner["login"], repo: RepoItem["name"]) => 
   gitHubStore.getOrganizationRepoBranches({owner, repo})
     .then((result: ApiResponse<RepoBranches[], any>) => {
       if (result.success) {
