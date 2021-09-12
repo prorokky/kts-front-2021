@@ -13,7 +13,8 @@ export type GetOrganizationRepoBranchesParams = {
 }
 
 export type GetOrganizationReposListParams = {
-    organizationName: string
+    organizationName: string,
+    page: number
 }
 
 export type GitHubRepoOwner = {

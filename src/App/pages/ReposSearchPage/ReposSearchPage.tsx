@@ -8,6 +8,7 @@ import RepoTile from "@components/RepoTile";
 import SearchIcon from "@components/SearchIcon";
 import { ReposSearchPageContext } from "@contexts/ReposSearchPageContext";
 import { getOrganizationReposListFetch } from "@root/root";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { Route, Link } from "react-router-dom";
 import { RepoItem } from "src/store/GitHubStore/types";
 
@@ -18,18 +19,19 @@ const ReposSearchPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [repos, setRepos] = useState<RepoItem[]>([]);
   const [selectedRepo, setSelectedRepo] = useState<RepoItem | undefined>();
+  const [page, setPage] = useState<number>(1);
 
-  const load = () => {}
+  const load = () => {};
 
   const handleInput = (value: React.SetStateAction<string>) => {
-    setValue(value)
-  }
+    setValue(value);
+  };
 
   const handlerButton = async (event: React.MouseEvent) => {
     event.preventDefault();
     setIsLoading(true);
-    let promise = getOrganizationReposListFetch(value)
-    let result = await promise
+    let promise = getOrganizationReposListFetch(value, page);
+    let result = await promise;
     if (result) {
       setRepos(result);
     } else {
@@ -47,7 +49,7 @@ const ReposSearchPage = () => {
   };
 
   const handlerDrawer = () => {
-    setSelectedRepo(undefined)
+    setSelectedRepo(undefined);
   };
 
   const ReposBranchesDrawerCall = () => {
@@ -57,6 +59,15 @@ const ReposSearchPage = () => {
         onClose={handlerDrawer}
       />
     );
+  };
+
+  const fetchMoreData = async () => {
+    let promise = getOrganizationReposListFetch(repos[0].owner.login, page);
+    let result = await promise;
+    if (result) {
+      setRepos(repos.concat(result))
+      setPage(page + 1)
+    }
   };
 
   return (
@@ -74,24 +85,30 @@ const ReposSearchPage = () => {
             <SearchIcon />
           </Button>
         </form>
-        {repos.map((repo) => (
-          <React.Fragment key={repo.id}>
-            <div className={ReposSearchPageStyles.card_block}>   
-              <div className={ReposSearchPageStyles.card}>
-                <Avatar
-                  src={repo.owner.avatar_url}
-                  alt="repo_img"
-                  letter={repo.name.substring(0, 1).toUpperCase()}
-                />
-                 <Link to={`/repos/${repo.name}`}>
-                    <RepoTile item={repo} onClick={handlerRepo} />
-                  </Link>
-              </div> 
-            </div>
-          </React.Fragment>
-        )
-      )}
-        <Route path="/repos/:name" component={ReposBranchesDrawerCall} />
+        {repos.length ? 
+        <><InfiniteScroll
+            dataLength={repos.length}
+            next={fetchMoreData}
+            hasMore={true}
+            loader={<h4>Загрузка...</h4>}
+            endMessage={<h4>Все репозитории загружены</h4>}
+          >
+            {repos.map((repo) => (
+              <React.Fragment key={repo.id}>
+                <div className={ReposSearchPageStyles.card_block}>
+                  <div className={ReposSearchPageStyles.card}>
+                    <Avatar
+                      src={repo.owner.avatar_url}
+                      alt="repo_img"
+                      letter={repo.name.substring(0, 1).toUpperCase()} />
+                    <Link to={`/repos/${repo.name}`}>
+                      <RepoTile item={repo} onClick={handlerRepo} />
+                    </Link>
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
+          </InfiniteScroll><Route path="/repos/:name" component={ReposBranchesDrawerCall} /></> : <></>}
       </div>
     </ReposSearchPageContext.Provider>
   );

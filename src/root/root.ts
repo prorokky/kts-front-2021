@@ -5,9 +5,10 @@ import {GitHubRepoOwner, RepoBranches, RepoItem} from "../store/GitHubStore/type
 const gitHubStore = new GitHubStore();
 
 export type OrganizationName = string
+export type FetchPage = number
 
-export const getOrganizationReposListFetch = (organizationName: OrganizationName) => 
-  gitHubStore.getOrganizationReposList({organizationName})
+export const getOrganizationReposListFetch = (organizationName: OrganizationName, page: FetchPage) => 
+  gitHubStore.getOrganizationReposList({organizationName, page})
     .then((result: ApiResponse<RepoItem[], any>) => {
       if (result.success) {
         return result.data
