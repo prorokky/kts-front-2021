@@ -85,7 +85,9 @@ const ReposSearchPage = () => {
                   alt="repo_img"
                   letter={repo.name.substring(0, 1).toUpperCase()}
                 />
-                <RepoTile item={repo} onClick={handlerRepo} />
+                 <Link to={`/repos/${repo.name}`}>
+                    <RepoTile item={repo} onClick={handlerRepo} />
+                  </Link>
               </div> 
             </div>
           </React.Fragment>
