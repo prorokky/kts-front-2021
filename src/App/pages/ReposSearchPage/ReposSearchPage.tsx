@@ -13,17 +13,16 @@ import { Route, Link } from "react-router-dom";
 import { RepoItem } from "src/store/GitHubStore/types";
 
 const ReposSearchPage = () => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [repos, setRepos] = useState<RepoItem[]>([]);
   const [selectedRepo, setSelectedRepo] = useState<RepoItem | undefined>();
-  const [visible, setVisible] = useState(false);
 
   const load = () => {}
 
-  const handlerInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+  const handleInput = (value: React.SetStateAction<string>) => {
+    setValue(value)
+  }
 
   const handlerButton = async (event: React.MouseEvent) => {
     event.preventDefault();
@@ -44,11 +43,10 @@ const ReposSearchPage = () => {
 
   const handlerRepo = (event: React.MouseEvent, item: RepoItem) => {
     setSelectedRepo(item);
-    setVisible(true);
   };
 
   const handlerDrawer = () => {
-    setVisible(false);
+    setSelectedRepo(undefined)
   };
 
   const ReposBranchesDrawerCall = () => {
@@ -56,7 +54,6 @@ const ReposSearchPage = () => {
       <ReposBranchesDrawer
         selectedRepo={selectedRepo}
         onClose={handlerDrawer}
-        visible={visible}
       />
     );
   };
@@ -71,7 +68,7 @@ const ReposSearchPage = () => {
     >
       <div>
         <form className="search-line">
-          <Input value={value} onChange={handlerInput} />
+          <Input value={value} onChange={handleInput} />
           <Button onClick={handlerButton}>
             <SearchIcon />
           </Button>

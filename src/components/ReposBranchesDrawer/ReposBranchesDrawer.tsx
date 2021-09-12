@@ -9,13 +9,11 @@ import { RepoBranches, RepoItem } from "src/store/GitHubStore/types";
 export type RepoBranchesDrawerProps = {
   selectedRepo: RepoItem | undefined;
   onClose: () => void;
-  visible: boolean;
 };
 
 const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   selectedRepo,
-  onClose,
-  visible
+  onClose
 }) => {
   const VALUE_WIDTH = 500
   const [branches, setBranches] = useState<RepoBranches[]>([]);
@@ -44,7 +42,7 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
         placement="right"
         width={VALUE_WIDTH}
         onClose={onClose}
-        visible={visible}
+        visible={selectedRepo ? true : false}
         getContainer={false}
       >
         {branches.map((branch) => {
