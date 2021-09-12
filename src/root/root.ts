@@ -1,23 +1,26 @@
-// Здесь необходимо продемонстрировать создание и использование GitHubStore
-
-import GitHubStore from '../store/GitHubStore/GitHubStore';
 import {ApiResponse} from '../shared/store/ApiStore/types';
-import {RepoItem} from "../store/GitHubStore/types";
+import GitHubStore from '../store/GitHubStore/GitHubStore';
+import {GitHubRepoOwner, RepoBranches, RepoItem} from "../store/GitHubStore/types";
 
 const gitHubStore = new GitHubStore();
 
-const EXAMPLE_ORGANIZATION = 'ktsstudio';
+export type OrganizationName = string
+export type Owner = string
+export type Repo = string
 
-gitHubStore.getOrganizationReposList({
-  organizationName: EXAMPLE_ORGANIZATION
-}).then((result: ApiResponse<RepoItem[], any>) => {
-  if (result.success) {
-    console.log(result.data.map(el => {
-      return el.name
-    }))
-  }
+export const getOrganizationReposListFetch = (organizationName: OrganizationName) => 
+  gitHubStore.getOrganizationReposList({organizationName})
+    .then((result: ApiResponse<RepoItem[], any>) => {
+      if (result.success) {
+        return result.data
+      }
+  })
 
-  console.log(result); // в консоли появится список репозиториев в ktsstudio
-})
 
-// В ДЗ 1 Не требуется визуально в разметке отображать результат запроса к сети. Достаточно вывести в console.log
+export const getOrganizationRepoBranchesFetch = (owner: GitHubRepoOwner["login"], repo: RepoItem["name"]) => 
+  gitHubStore.getOrganizationRepoBranches({owner, repo})
+    .then((result: ApiResponse<RepoBranches[], any>) => {
+      if (result.success) {
+        return result.data
+      }
+  })

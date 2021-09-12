@@ -1,6 +1,5 @@
 // Перечисление методов HTTP-запроса
 export enum HTTPMethod {
-    // TODO: заполнить
     GET = 'GET',
     POST = 'POST'
 }
@@ -21,7 +20,6 @@ export type RequestParams<ReqT> = {
 
 // Перечисление статусов ответа
 export enum StatusHTTP {
-    // TODO: заполнить
     OK = 200,
     InternalServerError = 500,
     UNEXPECTED_ERROR = 'UNEXPECTED_ERROR'
@@ -37,6 +35,11 @@ export type ApiResponse<SuccessT, ErrorT> =
     | {
     success: false;
     data: ErrorT;
+    status: StatusHTTP;
+}
+    | {
+    success: false;
+    data: null;
     status: StatusHTTP;
 };
 
