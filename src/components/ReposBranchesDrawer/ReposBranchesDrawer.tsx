@@ -17,6 +17,7 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   onClose,
   visible
 }) => {
+  const VALUE_WIDTH = 500
   const [branches, setBranches] = useState<RepoBranches[]>([]);
   const { name } = useParams<{name: string}>()
 
@@ -41,15 +42,15 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
       <Drawer
         title={`Список веток репозитория ${selectedRepo ? name : ''}`}
         placement="right"
-        width={500}
+        width={VALUE_WIDTH}
         onClose={onClose}
         visible={visible}
         getContainer={false}
       >
-        {branches.map((el) => {
+        {branches.map((branch) => {
           return (
-            <React.Fragment key={el.name}>
-              <p>{el.name}</p>
+            <React.Fragment key={branch.name}>
+              <p>{branch.name}</p>
             </React.Fragment>
           );
         })}

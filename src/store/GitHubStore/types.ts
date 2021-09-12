@@ -8,8 +8,8 @@
 import {ApiResponse} from "../../shared/store/ApiStore/types";
 
 export type GetOrganizationRepoBranchesParams = {
-    owner: string
-    repo: string
+    owner: GitHubRepoOwner["login"]
+    repo: RepoItem["name"]
 }
 
 export type GetOrganizationReposListParams = {

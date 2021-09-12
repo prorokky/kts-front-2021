@@ -16,7 +16,7 @@ const ReposSearchPage = () => {
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [repos, setRepos] = useState<RepoItem[]>([]);
-  const [selectedRepo, setSelectedRepo] = useState<RepoItem>();
+  const [selectedRepo, setSelectedRepo] = useState<RepoItem | undefined>();
   const [visible, setVisible] = useState(false);
 
   const load = () => {}
@@ -25,16 +25,16 @@ const ReposSearchPage = () => {
     setValue(event.target.value);
   };
 
-  const handlerButton = (event: React.MouseEvent) => {
+  const handlerButton = async (event: React.MouseEvent) => {
     event.preventDefault();
     setIsLoading(true);
-    getOrganizationReposListFetch(value).then((value) => {
-      if (value) {
-        setRepos(value);
-      } else {
-        alert("Что-то пошло не так!");
-      }
-    });
+    let promise = getOrganizationReposListFetch(value)
+    let result = await promise
+    if (result) {
+      setRepos(result);
+    } else {
+      alert("Что-то пошло не так!");
+    }
     setValue("");
   };
 
@@ -76,24 +76,21 @@ const ReposSearchPage = () => {
             <SearchIcon />
           </Button>
         </form>
-        {repos.map((el) => {
-          return (
-            <React.Fragment key={el.id}>
-              <div className="card-block">
-                <div className="card">
-                  <Avatar
-                    src={el.owner.avatar_url}
-                    alt="repo_img"
-                    letter={el.name.substring(0, 1).toUpperCase()}
-                  />
-                  <Link to={`/repos/${el.name}`}>
-                    <RepoTile item={el} onClick={handlerRepo} />
-                  </Link>
-                </div>
-              </div>
-            </React.Fragment>
-          );
-        })}
+        {repos.map((repo) => (
+          <React.Fragment key={repo.id}>
+            <div className="card-block">   
+              <div className="card">
+                <Avatar
+                  src={repo.owner.avatar_url}
+                  alt="repo_img"
+                  letter={repo.name.substring(0, 1).toUpperCase()}
+                />
+                <RepoTile item={repo} onClick={handlerRepo} />
+              </div> 
+            </div>
+          </React.Fragment>
+        )
+      )}
         <Route path="/repos/:name" component={ReposBranchesDrawerCall} />
       </div>
     </ReposSearchPageContext.Provider>

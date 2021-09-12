@@ -19,4 +19,4 @@ const Input: React.FC<InputProps> = ({ value, placeholder = 'Введите на
     )
 }
 
-export default Input
+export default React.memo(Input)

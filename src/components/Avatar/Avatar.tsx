@@ -9,24 +9,17 @@ type AvatarProps = {
 }
 
 const Avatar: React.FC<AvatarProps> = ({ src, alt, letter }) => {
-    let ava: JSX.Element
-
-    if (src) {
-        ava =   <img className='card__repo-img'
-                    src={src}
-                    alt={alt}>
-                </img>
-    } else {
-        ava =   <p className='card__repo-letter'>
-                    {letter}
-                </p>
-    }
-
     return (
         <div className='card__avatar'>
-            {ava}
+            {src && <img className='card__repo-img'
+                        src={src}
+                        alt={alt}>
+                    </img>}
+            {!src && <p className='card__repo-letter'>
+                        {letter}
+                    </p>}
         </div>
     )
 }
 
-export default Avatar
+export default React.memo(Avatar)
