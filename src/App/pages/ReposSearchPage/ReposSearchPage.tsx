@@ -15,7 +15,6 @@ const ReposSearchPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [repos, setRepos] = useState<RepoItem[]>([]);
   const [selectedRepo, setSelectedRepo] = useState<RepoItem | undefined>();
-  const [visible, setVisible] = useState(false);
 
   const handleInput = (value: React.SetStateAction<string>) => {
     setValue(value)
@@ -37,7 +36,6 @@ const ReposSearchPage = () => {
 
   const handlerRepo = (event: React.MouseEvent, item: RepoItem) => {
     setSelectedRepo(item);
-    setVisible(true)
   };
 
   const handlerDrawer = () => {
@@ -70,7 +68,6 @@ const ReposSearchPage = () => {
       <ReposBranchesDrawer
         selectedRepo={selectedRepo}
         onClose={handlerDrawer}
-        visible={visible}
       />
     </div>
   );
