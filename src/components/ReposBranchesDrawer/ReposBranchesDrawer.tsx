@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "antd/dist/antd.css";
 
-import { ReposBranchesDrawerContext } from "@contexts/ReposBranchesDrawerContext";
 import { getOrganizationRepoBranchesFetch } from "@root/root";
 import { Drawer } from "antd";
 import { Link, useParams } from "react-router-dom";
@@ -11,21 +10,18 @@ import ReposBranchesDrawerStyles from "./ReposBranchesDrawer.module.scss";
 
 export type RepoBranchesDrawerProps = {
   selectedRepo: number | undefined;
+  repos: RepoItem[];
   onClose: () => void;
 };
 
 const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   selectedRepo,
+  repos,
   onClose
 }) => {
   const VALUE_WIDTH = 500
   const [branches, setBranches] = useState<RepoBranches[]>([]);
   const { name } = useParams<{name: string}>()
-  const [repos, setRepos] = useState<RepoItem[]>([])
-
-  useEffect(() => {
-    setRepos(repos)
-  }, [repos])
 
   useEffect(() => {
     repos.forEach(repo => {
@@ -45,11 +41,6 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   }, [name, repos, selectedRepo]);
 
   return (
-    <ReposBranchesDrawerContext.Provider
-      value={{
-        repos
-      }}
-    >
       <Link className={ReposBranchesDrawerStyles.link} to='/repos'> 
       <Drawer
         title={`Список веток репозитория ${selectedRepo ? name : ''}`}
@@ -68,7 +59,6 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
         })}
       </Drawer>
     </Link>
-    </ReposBranchesDrawerContext.Provider>
     
   );
 };
