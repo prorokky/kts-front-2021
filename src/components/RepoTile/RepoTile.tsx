@@ -12,17 +12,10 @@ type RepoTileProps = {
 
 const RepoTile: React.FC<RepoTileProps> = ({ item, onClick }) => {
   return (
-<<<<<<< HEAD
-    <div className="card__content" onClick={(event) => onClick(event, item)}>
-      <div className="card__repo-info">
-        <span className="card__repo-name">{item.name ?? ""}</span>
-        <span className="card__company-name">
-=======
     <div className={RepoTileStyles.card__content} onClick={(event) => onClick(event, item)}>
       <div className={RepoTileStyles.card__repo_info}>
         <span className={RepoTileStyles.card__repo_name}>{item.name ?? ""}</span>
         <span className={RepoTileStyles.card__company_name}>
->>>>>>> hw-3
           {item.owner.login}
         </span>
       </div>

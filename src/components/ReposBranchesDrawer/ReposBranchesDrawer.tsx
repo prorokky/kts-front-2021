@@ -18,11 +18,7 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   selectedRepo,
   onClose
 }) => {
-<<<<<<< HEAD
-  const VALUE_WIDTH = 500  
-=======
   const VALUE_WIDTH = 500
->>>>>>> hw-3
   const [branches, setBranches] = useState<RepoBranches[]>([]);
   const { name } = useParams<{name: string}>()
   const [repos, setRepos] = useState<RepoItem[]>([])
