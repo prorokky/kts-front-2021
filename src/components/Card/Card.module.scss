@@ -1,0 +1,45 @@
+@import '@styles/variables.scss';
+
+.link {
+    color: $link-text-color;
+    text-decoration: none;
+
+    &:hover {
+        color: $link-text-color;
+        text-decoration: none;
+    }
+
+    &:visited {
+        color: $link-text-color;
+        text-decoration: none;
+    }
+
+    &:active {
+        color: $link-text-color;
+        text-decoration: none;
+    }
+}
+
+.cards_block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 357px;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 104px;
+    margin: 20px 0;
+    border: 1px solid $grey-bg-color;
+    border-radius: 6px;
+    align-items: center;
+    padding-left: 12px;
+
+    &:hover {
+        box-shadow: 0px 2px 6px rgba(182, 182, 182, 0.25);
+        cursor: pointer;
+    }
+}

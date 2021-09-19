@@ -1,7 +1,4 @@
-:root {
-    --grey-text-color: #7E7E7E;
-    --blue-link-color: #208FBF;
-}
+@import '@styles/variables.scss';
 
 .card__content {
     display: flex;
@@ -9,12 +6,12 @@
     margin-left: 24px;
 }
 
-.card__repo-info {
+.card__repo_info {
     display: flex;
     flex-direction: column;
 }
 
-.card__repo-name {
+.card__repo_name {
     height: 19px;
     font-style: normal;
     font-weight: bold;
@@ -23,27 +20,27 @@
     text-overflow: ellipsis
 }
 
-.card__company-name {
+.card__company_name {
     height: 16px;
     margin-top: 2px;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
     line-height: 16px;
-    color: var(--grey-text-color);
+    color: $grey-text-color;
     text-decoration: none;
+
+    &:hover {
+        color: $blue-link-color
+    }
 }
 
-.card__company-name:hover {
-    color: var(--blue-link-color)
-}
-
-.card__update-time {
+.card__update_time {
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
     line-height: 16px;
-    color: var(--grey-text-color);
+    color:$grey-text-color;
     margin: 0 20px;
 }
 
@@ -52,9 +49,9 @@
     font-weight: normal;
     font-size: 14px;
     line-height: 16px;
-    color: var(--grey-text-color);
-}
+    color: $grey-text-color;
 
-.card__stars > svg {
-    vertical-align: middle;
+    svg {
+        vertical-align: middle;
+    }
 }

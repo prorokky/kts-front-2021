@@ -1,0 +1,15 @@
+@import '@styles/variables.scss';
+
+.search_line__input {
+    width: 300px;
+    line-height: 50px;
+    font-size: 14px;
+    border: 1px solid $grey-bg-color;
+    border-radius: 6px;
+    text-indent: 12px;
+
+    &:focus {
+        border: 1px solid $red-bg-color;
+        outline: none;
+    }
+}
