@@ -57,6 +57,7 @@ const ReposSearchPage = () => {
     return (
       <ReposBranchesDrawer
         selectedRepo={selectedRepo}
+        repos={repos}
         onClose={handleDrawer}
       />
     );
