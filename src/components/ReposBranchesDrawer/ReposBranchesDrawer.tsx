@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "antd/dist/antd.css";
 
+import { ReposBranchesDrawerContext } from "@contexts/ReposBranchesDrawerContext";
 import { getOrganizationRepoBranchesFetch } from "@root/root";
 import { Drawer } from "antd";
 import { Link, useParams } from "react-router-dom";
 import { RepoBranches, RepoItem } from "src/store/GitHubStore/types";
 
+import ReposBranchesDrawerStyles from "./ReposBranchesDrawer.module.scss";
+
 export type RepoBranchesDrawerProps = {
-  selectedRepo: RepoItem | undefined;
+  selectedRepo: number | undefined;
   onClose: () => void;
 };
 
@@ -18,25 +21,36 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   const VALUE_WIDTH = 500
   const [branches, setBranches] = useState<RepoBranches[]>([]);
   const { name } = useParams<{name: string}>()
+  const [repos, setRepos] = useState<RepoItem[]>([])
 
   useEffect(() => {
-    if (selectedRepo) {
-      getOrganizationRepoBranchesFetch(
-        selectedRepo.owner.login,
-        name
-      ).then((data) => {
-        if (data) {
-          setBranches(data);
-        } else {
-            alert('Не удалось загрузить список репозиториев')
-        }
-      });
-    }
-  });
+    setRepos(repos)
+  }, [repos])
+
+  useEffect(() => {
+    repos.forEach(repo => {
+      if (repo.id === selectedRepo) {
+        getOrganizationRepoBranchesFetch(
+          repo.owner.login,
+          name
+        ).then((data) => {
+          if (data) {
+            setBranches(data);
+          } else {
+              alert('Не удалось загрузить список репозиториев')
+          }
+        });
+      }
+    })
+  }, [name, repos, selectedRepo]);
 
   return (
-    //TODO: исправить, чтобы ссылка была на крестик
-    <Link to='/repos'> 
+    <ReposBranchesDrawerContext.Provider
+      value={{
+        repos
+      }}
+    >
+      <Link className={ReposBranchesDrawerStyles.link} to='/repos'> 
       <Drawer
         title={`Список веток репозитория ${selectedRepo ? name : ''}`}
         placement="right"
@@ -54,6 +68,8 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
         })}
       </Drawer>
     </Link>
+    </ReposBranchesDrawerContext.Provider>
+    
   );
 };
 

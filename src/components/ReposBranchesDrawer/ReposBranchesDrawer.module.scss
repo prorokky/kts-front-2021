@@ -1,0 +1,16 @@
+@import '@styles/variables.scss';
+
+.link {
+    color: $link-text-color;
+    text-decoration: none;
+
+    &:visited {
+        color: $link-text-color;
+        text-decoration: none;
+    }
+
+    &:active {
+        color: $link-text-color;
+        text-decoration: none;
+    }
+}
