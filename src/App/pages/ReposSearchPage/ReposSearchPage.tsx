@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Button from "@components/Button";
-import Card from "@components/Card";
 import Input from "@components/Input";
-import ReposBranchesDrawer from "@components/ReposBranchesDrawer";
 import SearchIcon from "@components/SearchIcon";
 import { ReposSearchPageContext } from "@contexts/ReposSearchPageContext";
 import { getOrganizationReposListFetch } from "@root/root";
@@ -11,6 +9,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Route } from "react-router-dom";
 import { RepoItem } from "src/store/GitHubStore/types";
 
+import Card from "./components/Card";
+import ReposBranchesDrawer from "./components/ReposBranchesDrawer";
 import ReposSearchPageStyles from "./ReposSearchPage.module.scss";
 
 
