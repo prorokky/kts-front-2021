@@ -38,7 +38,8 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
             selectedRepo: computed,
             getOrganizationReposList: action,
             getMoreOrganizationReposList: action,
-            selectRepo: action
+            selectRepo: action,
+            setValue: action
         })
     }
 
