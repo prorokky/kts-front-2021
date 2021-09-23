@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "antd/dist/antd.css";
 
-import { getOrganizationRepoBranchesFetch } from "@root/root";
+import { RepoItemModel } from "@store/models/gitHubRepos";
+import { useLocalStore } from "@utils/useLocalStore";
 import { Drawer } from "antd";
 import { Link, useParams } from "react-router-dom";
-import { RepoBranches, RepoItem } from "src/store/GitHubStore/types";
+import { RepoBranches } from "src/store/GitHubStore/types";
 
+import GitHubStore from "../../../../../store/GitHubStore";
 import ReposBranchesDrawerStyles from "./ReposBranchesDrawer.module.scss";
 
+
 export type RepoBranchesDrawerProps = {
-  selectedRepo: number | undefined;
-  repos: RepoItem[];
+  selectedRepo: number;
+  repos: RepoItemModel[];
   onClose: () => void;
 };
 
@@ -23,22 +26,22 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   const [branches, setBranches] = useState<RepoBranches[]>([]);
   const { name } = useParams<{name: string}>()
 
+  const gitHubStore = useLocalStore(() => new GitHubStore())
+
   useEffect(() => {
     repos.forEach(repo => {
       if (repo.id === selectedRepo) {
-        getOrganizationRepoBranchesFetch(
-          repo.owner.login,
-          name
-        ).then((data) => {
-          if (data) {
-            setBranches(data);
-          } else {
+        gitHubStore.getOrganizationRepoBranches({owner: repo.owner.login, repo: name})
+          .then((response) => {
+            if (response.success) {
+              setBranches(response.data);
+            } else {
               alert('Не удалось загрузить список репозиториев')
-          }
-        });
+            }
+          })
       }
     })
-  }, [name, repos, selectedRepo]);
+  }, [gitHubStore, name, repos, selectedRepo]);
 
   return (
       <Link className={ReposBranchesDrawerStyles.link} to='/repos'> 

@@ -4,9 +4,9 @@
         "paths": {
             "@components/*": ["src/components/*"],
             "@styles/*": ["src/styles/*"],
-            "@root/*": ["src/root/*"],
-            "@contexts/*": ["src/contexts/*"],
-            "@config/*": ["src/config/*"]
+            "@config/*": ["src/config/*"],
+            "@utils/*": ["src/utils/*"],
+            "@store/*": ["src/store/*"]
         }
     }
 }

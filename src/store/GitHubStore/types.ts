@@ -5,7 +5,7 @@
  * Или не меняйте, если делаете запрос за списком репоизториев для организации)
  * Выберите любой запрос из публичного API GitHub.
  */
-import {ApiResponse} from "../../shared/store/ApiStore/types";
+import {ApiResponse} from "../rootStore/types";
 
 export type GetOrganizationRepoBranchesParams = {
     owner: GitHubRepoOwner["login"]
@@ -37,6 +37,6 @@ export type RepoBranches = {
 }
 
 export interface IGitHubStore {
-    getOrganizationReposList(params: GetOrganizationReposListParams): Promise<ApiResponse<RepoItem[], any>>;
+    getOrganizationReposList(params: GetOrganizationReposListParams): Promise<void>;
     getOrganizationRepoBranches(params: GetOrganizationRepoBranchesParams): Promise<ApiResponse<RepoBranches[], any>>;
 }
