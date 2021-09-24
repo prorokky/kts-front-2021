@@ -78,7 +78,7 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
         const response =  await this.apiStore.request<RepoItemApi[]>({
             method: HTTPMethod.GET,
             data: {
-                per_page: 30,   
+                per_page: 100,   
                 page: this._page},
             headers: {},
             endpoint: `/orgs/${params.organizationName}/repos`
@@ -117,7 +117,7 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
         const response =  await this.apiStore.request<RepoItemApi[]>({
             method: HTTPMethod.GET,
             data: {
-                per_page: 30,   
+                per_page: 100,   
                 page: this._page},
             headers: {},
             endpoint: `/orgs/${params.organizationName}/repos`

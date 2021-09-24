@@ -59,8 +59,7 @@ const ReposSearchPage = () => {
             dataLength={reposListStore.repos.length}
             next={fetchMoreData}
             hasMore={true}
-            loader={<h4 className={ReposSearchPageStyles.scroll_message}>Загрузка...</h4>}
-            endMessage={<h4 className={ReposSearchPageStyles.scroll_message}>Все репозитории загружены</h4>}
+            loader={""}
           >
             {reposListStore.repos.map(repo => {
               return <Card key={repo.id} repo={repo} handleRepo={() => reposListStore.selectRepo(repo.id)} />;
