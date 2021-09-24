@@ -19,7 +19,7 @@ export default class BranchesDrawerStore implements IBranchesDrawerStore, ILocal
 
     constructor() {
         makeObservable<BranchesDrawerStore, PrivateFields>(this, {
-            _branches: observable,
+            _branches: observable.ref,
             _errorMessage: observable,
             branches: computed,
             errorMessage: computed,

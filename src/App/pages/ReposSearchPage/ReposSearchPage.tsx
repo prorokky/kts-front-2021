@@ -3,8 +3,10 @@ import React, { useCallback, useMemo } from "react";
 import Button from "@components/Button";
 import Card from "@components/Card";
 import Input from "@components/Input";
+import Loader from "@components/Loader";
 import SearchIcon from "@components/SearchIcon";
 import ReposListStore from "@store/ReposListStore";
+import { Meta } from "@utils/meta";
 import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -12,7 +14,6 @@ import { Route } from "react-router-dom";
 
 import ReposBranchesDrawer from "./components/ReposBranchesDrawer";
 import ReposSearchPageStyles from "./ReposSearchPage.module.scss";
-
 
 const ReposSearchPage = () => {
   const reposListStore = useLocalStore(() => new ReposListStore())
@@ -51,6 +52,7 @@ const ReposSearchPage = () => {
             <SearchIcon />
           </Button>
         </form>
+        {reposListStore.meta === Meta.loading && <Loader />}
         <p className={ReposSearchPageStyles.error_message}>{reposListStore.errorMessage ?? ""}</p>
         {reposListStore.repos.length ? 
           <><InfiniteScroll
