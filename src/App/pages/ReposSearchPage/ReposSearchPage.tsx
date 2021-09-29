@@ -12,7 +12,7 @@ import { observer } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Route } from "react-router-dom";
 
-import ReposBranchesDrawer from "./components/ReposBranchesDrawer";
+import ReposBranchesDrawer from "../ReposBranchesDrawer";
 import ReposSearchPageStyles from "./ReposSearchPage.module.scss";
 
 const ReposSearchPage = () => {
