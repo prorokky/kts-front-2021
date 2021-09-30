@@ -41,7 +41,7 @@ module.exports = {
         new HTMLWebpackPlugin({
             template: path.join(srcPath, 'index.html')
         }),
-        isProd && new ReactRefreshWebpackPlugin(),
+        !isProd && new ReactRefreshWebpackPlugin(),
         new MiniCssExtractPlugin({
                 filename: '[name]-[hash].css'
             }
