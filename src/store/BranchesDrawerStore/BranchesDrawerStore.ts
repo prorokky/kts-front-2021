@@ -1,6 +1,7 @@
 import { normalizeRepoBranches, RepoBranchesApi, RepoBranchesModel } from '@store/models/gitHubRepos/repoBranches';
 import ApiStore from '@store/rootStore';
 import { HTTPMethod } from '@store/rootStore/types';
+import { getOrganizationRepoBranchesEndPoint } from '@utils/endpoint';
 import { ILocalStore } from '@utils/useLocalStore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 
@@ -45,7 +46,7 @@ export default class BranchesDrawerStore implements IBranchesDrawerStore, ILocal
             method: HTTPMethod.GET,
             data: {},
             headers: {},
-            endpoint: `/repos/${params.owner}/${params.repo}/branches`
+            endpoint: getOrganizationRepoBranchesEndPoint(params.owner, params.repo)
         })
 
         runInAction(() => {

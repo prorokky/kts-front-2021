@@ -1,6 +1,7 @@
 import { normalizeRepoItem, RepoItemApi, RepoItemModel } from '@store/models/gitHubRepos';
 import ApiStore from '@store/rootStore';
 import { HTTPMethod } from '@store/rootStore/types';
+import { getMoreOrganizationReposListEndPoint, getOrganizationReposListEndPoint } from '@utils/endpoint';
 import { Meta } from '@utils/meta';
 import { ILocalStore } from '@utils/useLocalStore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
@@ -19,7 +20,7 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
     private _meta: Meta = Meta.initial
     private _errorMessage: string = ''
     private _page: number = 1
-    private _selectedRepo: number = -1
+    private _selectedRepo: RepoItemModel | null = null
     private _value: string = ''
 
     constructor() {
@@ -59,7 +60,7 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
         return this._page
     }
 
-    get selectedRepo(): number {
+    get selectedRepo(): RepoItemModel | null {
         return this._selectedRepo
     }
 
@@ -81,7 +82,7 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
                 per_page: 100,   
                 page: this._page},
             headers: {},
-            endpoint: `/orgs/${params.organizationName}/repos`
+            endpoint: getOrganizationReposListEndPoint(params.organizationName)
         })
 
         runInAction(() => {
@@ -109,7 +110,6 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
     }
 
     async getMoreOrganizationReposList(
-        params: GetOrganizationReposListParams
     ): Promise<void> {
         this._meta = Meta.loading
         this._errorMessage = ''
@@ -120,7 +120,7 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
                 per_page: 100,   
                 page: this._page},
             headers: {},
-            endpoint: `/orgs/${params.organizationName}/repos`
+            endpoint: getMoreOrganizationReposListEndPoint(this.value)
         })
 
         runInAction(() => {
@@ -145,8 +145,8 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
         })
     }
 
-    selectRepo(id: number): void {
-        this._selectedRepo = id
+    selectRepo(repo: RepoItemModel | null): void {
+        this._selectedRepo = repo
     }
 
     setValue(value: string): void {
