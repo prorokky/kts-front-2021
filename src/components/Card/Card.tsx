@@ -1,27 +1,27 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import Avatar from "@components/Avatar";
 import RepoTile from "@components/RepoTile";
+import { RepoItemModel } from "@store/models/gitHubRepos";
 import { Link } from "react-router-dom";
-import { RepoItem } from "src/store/GitHubStore/types";
 
 import CardStyles from './Card.module.scss'
 
 type CardProps = {
-    repo: RepoItem;
-    handleRepo: (item: RepoItem) => void
+    repo: RepoItemModel;
+    handleRepo: (item: RepoItemModel) => void
 }
 
 const Card: React.FC<CardProps> = ({ repo, handleRepo }) => {
-    const selectRepo = () => {
+    const selectRepo = useCallback(() => {
         handleRepo(repo)
-    }
+    }, [handleRepo, repo])
 
     return(
         <div className={CardStyles.card_block}>
             <div className={CardStyles.card}>
             <Avatar
-                src={repo.owner.avatar_url}
+                src={repo.owner.avatarUrl}
                 alt="repo_img"
                 letter={repo.name.substring(0, 1).toUpperCase()} />
             <Link className={CardStyles.link} to={`/repos/${repo.name}`}>
@@ -32,4 +32,4 @@ const Card: React.FC<CardProps> = ({ repo, handleRepo }) => {
     )
 }
 
-export default Card
+export default React.memo(Card)
