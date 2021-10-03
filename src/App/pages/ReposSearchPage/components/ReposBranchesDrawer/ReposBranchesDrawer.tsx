@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "antd/dist/antd.css";
 
+import Branches from "@components/Branches";
 import BranchesDrawerStore from "@store/BranchesDrawerStore";
 import { RepoItemModel } from "@store/models/gitHubRepos";
 import { useLocalStore } from "@utils/useLocalStore";
@@ -11,14 +12,12 @@ import { Link, useParams } from "react-router-dom";
 import ReposBranchesDrawerStyles from "./ReposBranchesDrawer.module.scss";
 
 export type RepoBranchesDrawerProps = {
-  selectedRepo: number;
-  repos: RepoItemModel[];
+  selectedRepo: RepoItemModel | null;
   onClose: () => void;
 };
 
 const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   selectedRepo,
-  repos,
   onClose,
 }) => {
   const VALUE_WIDTH = 500;
@@ -27,15 +26,13 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
   const branchesDrawerStore = useLocalStore(() => new BranchesDrawerStore())
 
   useEffect(() => {
-    repos.forEach((repo) => {
-      if (repo.id === selectedRepo) {
+      if (selectedRepo) {
         branchesDrawerStore.getOrganizationRepoBranches({
-          owner: repo.owner.login,
+          owner: selectedRepo.owner.login,
           repo: name,
         });
-      }
-    });
-  }, [branchesDrawerStore, name, repos, selectedRepo]);
+      };
+  }, [branchesDrawerStore, name, selectedRepo]);
 
   return (
     <Link className={ReposBranchesDrawerStyles.link} to="/repos">
@@ -49,13 +46,9 @@ const ReposBranchesDrawer: React.FC<RepoBranchesDrawerProps> = ({
       >
         {branchesDrawerStore.branches.map((branch) => {
           return (
-            <React.Fragment key={branch.name}>
-              {branchesDrawerStore.errorMessage ? (
-                branchesDrawerStore.errorMessage
-              ) : (
-                <p>{branch.name}</p>
-              )}
-            </React.Fragment>
+              <React.Fragment key={branch.name}>
+                    <Branches branch={branch} />
+              </React.Fragment>
           );
         })}
       </Drawer>

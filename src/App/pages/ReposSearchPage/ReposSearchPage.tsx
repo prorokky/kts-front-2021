@@ -16,58 +16,50 @@ import ReposBranchesDrawer from "./components/ReposBranchesDrawer";
 import ReposSearchPageStyles from "./ReposSearchPage.module.scss";
 
 const ReposSearchPage = () => {
-  const reposListStore = useLocalStore(() => new ReposListStore())
+    const reposListStore = useLocalStore(() => new ReposListStore())
 
-  const handleInput = useMemo(() => {
-    return (value: string) => {
-      reposListStore.setValue(value);
-    }
-  }, [reposListStore]);
+    const handleInput = useMemo(() => {
+        return (value: string) => {
+            reposListStore.setValue(value);
+        }
+    }, [reposListStore]);
 
-  const handleSearch = useCallback(
-    (event: React.MouseEvent) => {
-      event.preventDefault();
-      reposListStore.getOrganizationReposList({organizationName: reposListStore.value})
-    }, [reposListStore]) 
+    const ReposBranchesDrawerCall = useCallback(() => {
+        return (
+            <ReposBranchesDrawer
+                selectedRepo={reposListStore.selectedRepo}
+                onClose={() => reposListStore.selectRepo(null)}
+            />
+        )}, [reposListStore]);
 
-  const ReposBranchesDrawerCall = useCallback(() => {
+    const handleRepo = useCallback((repo) => reposListStore.selectRepo(repo), [reposListStore])
+
     return (
-      <ReposBranchesDrawer
-        selectedRepo={reposListStore.selectedRepo}
-        repos={reposListStore.repos}
-        onClose={() => reposListStore.selectRepo(-1)}
-      />
-    )}, [reposListStore]);
-
-  const fetchMoreData = useCallback(
-    () => reposListStore.getMoreOrganizationReposList({organizationName: reposListStore.value}),
-    [reposListStore]
-  )
-
-  return (
-      <div>
-        <form className={ReposSearchPageStyles.search_line}>
-          <Input value={reposListStore.value} onChange={handleInput} />
-          <Button isLoading={reposListStore.meta} onClick={handleSearch}>
-            <SearchIcon />
-          </Button>
-        </form>
-        {reposListStore.meta === Meta.loading && <Loader />}
-        <p className={ReposSearchPageStyles.error_message}>{reposListStore.errorMessage ?? ""}</p>
-        {reposListStore.repos.length ? 
-          <><InfiniteScroll
-            dataLength={reposListStore.repos.length}
-            next={fetchMoreData}
-            hasMore={true}
-            loader={""}
-          >
-            {reposListStore.repos.map(repo => {
-              return <Card key={repo.id} repo={repo} handleRepo={() => reposListStore.selectRepo(repo.id)} />;
-            })}
-          </InfiniteScroll></> : <></>}
-          <Route path={"/repos/:name"} component={ReposBranchesDrawerCall} />
-      </div>
-  );
+        <div>
+            <form className={ReposSearchPageStyles.search_line}>
+                <Input value={reposListStore.value} onChange={handleInput} />
+                <Button isLoading={reposListStore.meta} onClick={() =>
+                    reposListStore.getOrganizationReposList({organizationName: reposListStore.value})
+                }>
+                    <SearchIcon />
+                </Button>
+            </form>
+            {reposListStore.meta === Meta.loading && <Loader />}
+            <p className={ReposSearchPageStyles.error_message}>{reposListStore.errorMessage ?? ""}</p>
+            {reposListStore.repos.length ?
+                <><InfiniteScroll
+                    dataLength={reposListStore.repos.length}
+                    next={() => reposListStore.getMoreOrganizationReposList()}
+                    hasMore={true}
+                    loader={""}
+                >
+                    {reposListStore.repos.map(repo => {
+                        return <Card key={repo.id} repo={repo} handleRepo={() => handleRepo(repo)} />;
+                    })}
+                </InfiniteScroll></> : <></>}
+            <Route path={"/repos/:name"} component={ReposBranchesDrawerCall} />
+        </div>
+    );
 };
 
 export default observer(ReposSearchPage);
