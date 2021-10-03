@@ -1,8 +1,9 @@
 const path = require('path')
-const HTMLWebpackPlugin = require('html-webpack-plugin')
+
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TsCheckerPlugin = require('fork-ts-checker-webpack-plugin')
+const HTMLWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const buildPath = path.resolve(__dirname, 'dist')
 const srcPath = path.resolve(__dirname, 'src')
