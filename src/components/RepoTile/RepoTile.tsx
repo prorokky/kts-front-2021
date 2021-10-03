@@ -1,13 +1,13 @@
 import React from "react";
 
 import StarIcon from "@components/StarIcon";
-import { RepoItem } from "src/store/GitHubStore/types";
+import { RepoItemModel } from "@store/models/gitHubRepos";
 
 import RepoTileStyles from "./RepoTile.module.scss";
 
 type RepoTileProps = {
-  item: RepoItem;
-  onClick: (event: React.MouseEvent, item: RepoItem) => void;
+  item: RepoItemModel;
+  onClick: (event: React.MouseEvent, item: RepoItemModel) => void;
 };
 
 const RepoTile: React.FC<RepoTileProps> = ({ item, onClick }) => {
@@ -22,10 +22,10 @@ const RepoTile: React.FC<RepoTileProps> = ({ item, onClick }) => {
       <div className={RepoTileStyles.card__other_info}>
         <span className={RepoTileStyles.card__stars}>
           {<StarIcon />}
-          {item.stargazers_count}
+          {item.stargazersCount}
         </span>
         <span className={RepoTileStyles.card__update_time}>
-          {item.updated_at.substring(0, 10)}
+          {item.updatedAt.substring(0, 10)}
         </span>
       </div>
     </div>
