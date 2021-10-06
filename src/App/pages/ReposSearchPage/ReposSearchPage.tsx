@@ -49,7 +49,7 @@ const ReposSearchPage = () => {
             {reposListStore.repos.length ?
                 <><InfiniteScroll
                     dataLength={reposListStore.repos.length}
-                    next={() => reposListStore.getMoreOrganizationReposList()}
+                    next={reposListStore.getMoreOrganizationReposList}
                     hasMore={true}
                     loader={""}
                 >

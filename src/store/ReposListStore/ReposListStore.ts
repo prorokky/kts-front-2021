@@ -38,7 +38,7 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
             page: computed,
             selectedRepo: computed,
             getOrganizationReposList: action,
-            getMoreOrganizationReposList: action,
+            getMoreOrganizationReposList: action.bound,
             selectRepo: action,
             setValue: action
         })
