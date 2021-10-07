@@ -11,7 +11,7 @@ import { GetOrganizationReposListParams, IReposListStore } from './types';
 
 const BASE_URL = 'https://api.github.com'
 
-type PrivateFields = '_repos' | '_meta' | '_errorMessage' | '_page' | '_selectedRepo' | '_value'
+type PrivateFields = '_repos' | '_meta' | '_errorMessage' | '_page' | '_selectedRepo' | '_value' | '_default_repos'
 
 export default class ReposListStore implements IReposListStore, ILocalStore { 
     private readonly apiStore = new ApiStore(BASE_URL);
@@ -22,6 +22,7 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
     private _page: number = 1
     private _selectedRepo: RepoItemModel | null = null
     private _value: string = ''
+    private _default_repos: CollectionModel<number, RepoItemModel> = getInitialCollectionModel()
 
     constructor() {
         makeObservable<ReposListStore, PrivateFields>(this, {
@@ -32,11 +33,13 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
             _page: observable,
             _selectedRepo: observable,
             _value: observable,
+            _default_repos: observable,
             repos: computed,
             meta: computed,
             errorMessage: computed,
             page: computed,
             selectedRepo: computed,
+            getDefaultGitRepos: action,
             getOrganizationReposList: action,
             getMoreOrganizationReposList: action.bound,
             selectRepo: action,
@@ -66,6 +69,50 @@ export default class ReposListStore implements IReposListStore, ILocalStore {
 
     get value(): string {
         return this._value
+    }
+
+    get default_repos(): RepoItemModel[] {
+        return this._default_repos.order.map((id) => this._default_repos.entities[id])
+    }
+
+    async getDefaultGitRepos(
+        params: GetOrganizationReposListParams
+    ): Promise<void> {
+        this._meta = Meta.loading
+        this._default_repos = getInitialCollectionModel(    )
+        this._errorMessage = ''
+
+        const response =  await this.apiStore.request<RepoItemApi[]>({
+            method: HTTPMethod.GET,
+            data: {
+                per_page: 100,
+                page: this._page},
+            headers: {},
+            endpoint: getOrganizationReposListEndPoint(params.organizationName)
+        })
+
+        runInAction(() => {
+            if (response.success) {
+                try {
+                    const loadRepos = getInitialCollectionModel()
+                    for (const item of response.data) {
+                        loadRepos.order.push(item.id)
+                        loadRepos.entities[item.id] = normalizeRepoItem(item)
+                    }
+                    this._meta = Meta.success
+                    this._page++
+                    this._default_repos = loadRepos
+                    return
+                } catch (e) {
+                    this._meta = Meta.error
+                    this._errorMessage = 'Что-то пошло не так'
+                    this._default_repos = getInitialCollectionModel()
+                }
+            }
+
+            this._meta = Meta.error
+            this._errorMessage = 'Что-то пошло не так'
+        })
     }
 
     async getOrganizationReposList(
