@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 
 import RepoInfoStyle from './RepoInfo.module.scss'
 import {RepoItemModel} from "@store/models/gitHubRepos";
