@@ -23,12 +23,6 @@ const ReposSearchPage = () => {
         reposListStore.getDefaultGitRepos({organizationName: 'git'})
     }, [])
 
-    const handleInput = useMemo(() => {
-        return (value: string) => {
-            reposListStore.setValue(value);
-        }
-    }, [reposListStore]);
-
     const ReposBranchesDrawerCall = useCallback(() => {
         return (
             <ReposBranchesDrawer
