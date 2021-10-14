@@ -10,23 +10,18 @@ import {Meta} from "@utils/meta";
 import {useLocalStore} from "@utils/useLocalStore";
 import {observer} from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Route} from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 
 import ReposBranchesDrawer from "../ReposBranchesDrawer";
 import ReposSearchPageStyles from "./ReposSearchPage.module.scss";
 
 const ReposSearchPage = () => {
     const reposListStore = useLocalStore(() => new ReposListStore())
+    const history = useHistory();
 
     useEffect(() => {
         reposListStore.getDefaultGitRepos({organizationName: 'git'})
     }, [])
-
-    const handleInput = useMemo(() => {
-        return (value: string) => {
-            reposListStore.setValue(value);
-        }
-    }, [reposListStore]);
 
     const ReposBranchesDrawerCall = useCallback(() => {
         return (
@@ -43,7 +38,11 @@ const ReposSearchPage = () => {
         <div>
 
             <form className={ReposSearchPageStyles.search_line}>
-                <Input value={reposListStore.value} onChange={handleInput}/>
+                <Input value={reposListStore.value} onChange={(event) => {
+                    reposListStore.setValue(event);
+                    history.push(`?search=${reposListStore.value}`);
+                    }
+                }/>
                 <Button isLoading={reposListStore.meta} onClick={() =>
                     reposListStore.getOrganizationReposList({organizationName: reposListStore.value})
                 }>
